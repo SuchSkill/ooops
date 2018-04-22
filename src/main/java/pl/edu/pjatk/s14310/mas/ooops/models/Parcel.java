@@ -2,8 +2,10 @@ package pl.edu.pjatk.s14310.mas.ooops.models;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
@@ -11,21 +13,26 @@ import java.time.chrono.ChronoLocalDateTime;
 @Data
 @Entity
 @NoArgsConstructor
+@ToString
 public class Parcel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotNull
     private String deliveryAddress;
     private int weight;
     private LocalDate creationDate;
     private LocalDate estimatedDeliveryDate;
+    @NotNull
     private LocalDate deliveredDate;
     private boolean createdUrgent;
     @ManyToOne
+    @NotNull
     private Individual givenBy;
     private static int hoursToUrgent = 24;
 //    private Customer deliveredTo;
 
+    @NotNull
     public Parcel(String deliveryAddress, int weight, boolean isUrgent, Individual givenBy) {
         this.deliveryAddress = deliveryAddress;
         this.weight = weight;

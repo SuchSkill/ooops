@@ -75,4 +75,12 @@ public class OoopsApplicationTests {
         Parcel parcel = new Parcel("ul. Koszykowa 86 02-008 Warszawa", 500, false, individual);
         assertThat(parcel.getGivenBy().getPhones().size(), equalTo(2));
     }
+
+    @Test
+    public void showBusinessClassMethod() {
+        Parcel parcel = new Parcel("ul. Koszykowa 86 02-008 Warszawa", 500, false, individual);
+        Parcel parcel2 = new Parcel("ul. Koszykowa 86 02-008 Warszawa", 500, false, individual);
+        System.out.println(parcel2);
+        assertThat(parcel.getGivenBy().getPhones().size(), equalTo(2));
+    }
 }
