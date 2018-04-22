@@ -21,15 +21,17 @@ public class Parcel {
     @NotNull
     private String deliveryAddress;
     private int weight;
+    @NotNull
     private LocalDate creationDate;
     private LocalDate estimatedDeliveryDate;
-    @NotNull
     private LocalDate deliveredDate;
     private boolean createdUrgent;
     @ManyToOne
     @NotNull
     private Individual givenBy;
     private static int hoursToUrgent = 24;
+    @OneToOne
+    private ParcelInfo parcelInfo;
 //    private Customer deliveredTo;
 
     @NotNull
@@ -40,6 +42,9 @@ public class Parcel {
         this.estimatedDeliveryDate = creationDate.plusDays(3);
         this.createdUrgent = isUrgent;
         this.givenBy = givenBy;
+        this.parcelInfo = null;
+
+
 //        this.deliveredTo = null;
     }
 

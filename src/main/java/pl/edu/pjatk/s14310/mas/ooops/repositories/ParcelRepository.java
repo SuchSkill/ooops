@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface ParcelRepository extends CrudRepository<Parcel, Integer> {
     List<Parcel> findByDeliveredDate(LocalDate deliveryDate);
+
+    List<Parcel> findByEstimatedDeliveryDate(LocalDate estimatedDeliveryDate);
 }

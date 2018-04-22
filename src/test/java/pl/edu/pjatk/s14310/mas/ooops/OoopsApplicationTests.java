@@ -6,10 +6,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pl.edu.pjatk.s14310.mas.ooops.models.DeliveryList;
 import pl.edu.pjatk.s14310.mas.ooops.models.Individual;
 import pl.edu.pjatk.s14310.mas.ooops.models.Parcel;
 import pl.edu.pjatk.s14310.mas.ooops.repositories.CustomerRepository;
+import pl.edu.pjatk.s14310.mas.ooops.repositories.DeliveryListRepository;
 import pl.edu.pjatk.s14310.mas.ooops.repositories.ParcelRepository;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertNotEquals;
@@ -24,6 +30,8 @@ public class OoopsApplicationTests {
     private ParcelRepository parcelRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private DeliveryListRepository deliveryListRepository;
 
 
     @Before
@@ -82,5 +90,29 @@ public class OoopsApplicationTests {
         Parcel parcel2 = new Parcel("ul. Koszykowa 86 02-008 Warszawa", 500, false, individual);
         System.out.println(parcel2);
         assertThat(parcel.getGivenBy().getPhones().size(), equalTo(2));
+    }
+
+    @Test
+    public void showQualifiedAndAttributeAssociations() {
+        System.out.println("test started");
+        Parcel parcel = new Parcel("ul. Koszykowa 86 02-008 Warszawa", 500, false, individual);
+        Parcel parcel2 = new Parcel("ul. Koszykowa 86 02-008 Warszawa", 500, false, individual);
+        parcel.setEstimatedDeliveryDate(LocalDate.now());
+        parcel2.setEstimatedDeliveryDate(LocalDate.now());
+//        List<Parcel> parcels = new ArrayList<>();
+//        parcels.add(parcel);
+//        parcels.add(parcel2);
+
+
+        parcelRepository.save(parcel);
+        parcelRepository.save(parcel2);
+        List<Parcel> estimatedDeliveryToday = parcelRepository.findByEstimatedDeliveryDate(LocalDate.now());
+
+        DeliveryList deliveryList = new DeliveryList(estimatedDeliveryToday);
+        deliveryListRepository.save(deliveryList);
+
+        System.out.println(deliveryList);
+
+
     }
 }
