@@ -32,11 +32,15 @@ public class Parcel {
     @NotNull
     private Individual givenBy;
     private static int hoursToUrgent = 24;
-    //    private Customer deliveredTo;
     private List<DeliveryList> deliveryLists;
 
+    private String signature;
+    private int wrappingPrice;
+
+
+
     @NotNull
-    public Parcel(String deliveryAddress, int weight, boolean isUrgent, Individual givenBy) {
+    public Parcel(String deliveryAddress, int weight, boolean isUrgent, Individual givenBy, String signature) {
         this.deliveryAddress = deliveryAddress;
         this.weight = weight;
         this.creationDate = LocalDate.now();
@@ -44,15 +48,17 @@ public class Parcel {
         this.createdUrgent = isUrgent;
         this.givenBy = givenBy;
         this.deliveryLists = new ArrayList<>();
-
-
-//        this.deliveredTo = null;
+        this.signature = signature;
+        wrappingPrice = signature == null ? weight : 0;
     }
+
+
     public void addDeliveryList(DeliveryList dl){
         deliveryLists.add(dl);
     }
     public int getPrice(){
-        return isUrgent()? weight*2:weight;
+        int deliveryPrice = isUrgent() ? weight * 2 : weight;
+        return deliveryPrice+wrappingPrice;
     }
     public static int getPrice(int weightEstimation, boolean isUrgent){
         return isUrgent? weightEstimation*2:weightEstimation;

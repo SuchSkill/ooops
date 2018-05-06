@@ -13,4 +13,9 @@ public class Company implements Customer {
     @Id
     private int id;
     private String regNo;
+
+    @Override
+    public int calculateDiscount() {
+        return 5;
+    }
 }

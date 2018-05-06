@@ -30,5 +30,10 @@ public class Individual implements Customer, Person {
     public void addPhone(String phone) {
         phones.add(phone);
     }
+
+    @Override
+    public int calculateDiscount() {
+        return 0;
+    }
 }
 
