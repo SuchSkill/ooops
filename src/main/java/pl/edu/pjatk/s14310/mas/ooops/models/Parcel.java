@@ -9,6 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -30,9 +32,8 @@ public class Parcel {
     @NotNull
     private Individual givenBy;
     private static int hoursToUrgent = 24;
-    @OneToOne
-    private ParcelInfo parcelInfo;
-//    private Customer deliveredTo;
+    //    private Customer deliveredTo;
+    private List<DeliveryList> deliveryLists;
 
     @NotNull
     public Parcel(String deliveryAddress, int weight, boolean isUrgent, Individual givenBy) {
@@ -42,12 +43,14 @@ public class Parcel {
         this.estimatedDeliveryDate = creationDate.plusDays(3);
         this.createdUrgent = isUrgent;
         this.givenBy = givenBy;
-        this.parcelInfo = null;
+        this.deliveryLists = new ArrayList<>();
 
 
 //        this.deliveredTo = null;
     }
-
+    public void addDeliveryList(DeliveryList dl){
+        deliveryLists.add(dl);
+    }
     public int getPrice(){
         return isUrgent()? weight*2:weight;
     }
