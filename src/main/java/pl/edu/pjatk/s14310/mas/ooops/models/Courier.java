@@ -22,6 +22,7 @@ public class Courier implements Person{
     @Setter
     private String address;
     private List<Area> areas;
+    private Office office;
 
     public Courier(Set<String> phones, String address, @NotNull List<Area> areas) {
         if (areas.size()==0) {
@@ -30,6 +31,13 @@ public class Courier implements Person{
         this.phones = phones;
         this.address = address;
         this.areas = areas;
+    }
+
+    public Courier(Set<String> phones, String address,@NotNull Office office) {
+        this.phones = phones;
+        this.address = address;
+        this.office = office;
+        office.addCourier(this);
     }
 
     @Override

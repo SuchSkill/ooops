@@ -3,6 +3,7 @@ package pl.edu.pjatk.s14310.mas.ooops.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -33,7 +34,7 @@ public class Parcel {
     private Individual givenBy;
     private static int hoursToUrgent = 24;
     private List<DeliveryList> deliveryLists;
-
+    private State state;
     private String signature;
     private int wrappingPrice;
 

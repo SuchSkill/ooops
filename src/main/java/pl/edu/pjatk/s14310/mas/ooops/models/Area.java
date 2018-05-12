@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 
 
 @NoArgsConstructor
@@ -24,16 +25,29 @@ public class Area {
     private String name;
     private List<Courier> couriers;
     private List<Region> regions;
+    @Setter
+    @Getter
+
+    private SortedSet<Office> offices;
+    @Setter
+    @Getter
+    private Office headquarter;
 
     private int limit = 4;
 
-    public Area(@NotNull String name,@NotNull List<Courier> couriers, String rName, String rDesc) {
+
+    public Area(@NotNull String name,@NotNull List<Courier> couriers,String rName, String rDesc,@NotNull SortedSet<Office> offices,@NotNull Office headquarter) {
+        if (!offices.contains(headquarter)) {
+            throw new IllegalArgumentException("headquarter have to be in list of offices");
+        }
         checkLimit(couriers);
         this.name = name;
         this.couriers = couriers;
         Region region = new Region(rName, rDesc);
         this.regions = new ArrayList<>();
         regions.add(region);
+        this.offices = offices;
+        this.headquarter = headquarter;
     }
 
     private void checkLimit(@NotNull List<Courier> couriers) {
