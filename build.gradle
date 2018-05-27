@@ -29,6 +29,10 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('org.springframework.boot:spring-boot-starter-web')
     runtime('org.springframework.boot:spring-boot-devtools')
+// https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
+    compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.0.10.Final'
+
+
 //    runtime('mysql:mysql-connector-java')
     // https://mvnrepository.com/artifact/com.h2database/h2
     compile group: 'com.h2database', name: 'h2', version: '1.4.197'

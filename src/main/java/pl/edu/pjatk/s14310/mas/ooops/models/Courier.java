@@ -3,7 +3,9 @@ package pl.edu.pjatk.s14310.mas.ooops.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,8 +19,10 @@ public class Courier implements Person{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @ElementCollection
+    @Digits(integer = 10, fraction = 0)
     private Set<String> phones;
     @Setter
+    @Pattern(regexp = "[a-zA-Z0-9 ]")
     private String address;
     @OneToMany(targetEntity=Area.class, fetch=FetchType.EAGER)
     private List<Area> areas;
