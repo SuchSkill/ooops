@@ -2,14 +2,13 @@ package pl.edu.pjatk.s14310.mas.ooops.models;
 
 import lombok.*;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,11 +16,13 @@ public class Courier implements Person{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
+    @ElementCollection
     private Set<String> phones;
     @Setter
     private String address;
+    @OneToMany(targetEntity=Area.class, fetch=FetchType.EAGER)
     private List<Area> areas;
+    @OneToOne
     private Office office;
 
     public Courier(Set<String> phones, String address, @NotNull List<Area> areas) {

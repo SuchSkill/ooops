@@ -3,14 +3,13 @@ package pl.edu.pjatk.s14310.mas.ooops.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Entity
 @Data
 @NoArgsConstructor
 public class Office implements Comparable<Office> {
@@ -19,9 +18,12 @@ public class Office implements Comparable<Office> {
     private int id;
     private String address;
     @NotNull
+    @ElementCollection
     private List<String> phones = new ArrayList<>();
+    @OneToOne
     private Area area;
     private int size;
+    @OneToMany(targetEntity=Courier.class, fetch=FetchType.EAGER)
     private Set<Courier> couriers;
 
     public void setPhones(String phone) {

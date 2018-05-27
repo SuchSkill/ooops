@@ -22,6 +22,7 @@ public class DeliveryList {
     private Map<Integer, Parcel> parcelMap = new HashMap<>();
     private String CarPlateNumber;
     private int alcoholTestResults;
+    @OneToOne(targetEntity=Courier.class, fetch=FetchType.EAGER)
     private Courier courier;
 
 

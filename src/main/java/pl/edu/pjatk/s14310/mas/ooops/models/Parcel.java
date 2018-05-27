@@ -33,6 +33,7 @@ public class Parcel {
     @NotNull
     private Individual givenBy;
     private static int hoursToUrgent = 24;
+    @OneToMany(targetEntity=DeliveryList.class, fetch=FetchType.EAGER)
     private List<DeliveryList> deliveryLists;
     private State state;
     private String signature;
