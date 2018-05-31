@@ -119,4 +119,10 @@ public class OoopsApplicationTests {
 //
 
 
+    @Test
+    public void name() {
+
+        Parcel parcel = new Parcel();
+        parcelRepository.save(parcel);
+    }
 }
