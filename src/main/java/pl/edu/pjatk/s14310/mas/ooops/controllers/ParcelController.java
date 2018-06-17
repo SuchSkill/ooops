@@ -76,4 +76,12 @@ public class ParcelController {
         model.addAttribute("parcels", parcels);
         return "results :: resultsList";
     }
+
+    @GetMapping("/parcel/calc-price/{weight}/{isUrgent}")
+    @ResponseBody
+    public String calcParcelsPrice(@PathVariable("weight") int weight,
+                                   @PathVariable("isUrgent") boolean isUrgent) {
+//        boolean b = isUrgent == 2;
+        return Parcel.getPrice(weight, isUrgent)+"";
+    }
 }

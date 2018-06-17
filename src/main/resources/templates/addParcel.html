@@ -29,7 +29,7 @@
 <!--<input type="submit" value="Create" />-->
 <!--</form>-->
 
-<form class="form-horizontal"
+<form id="form" class="form-horizontal"
       th:action="@{/addParcel}"
       th:object="${parcelForm}" method="POST">
     <fieldset>
@@ -96,6 +96,23 @@
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Delivery address">Price</label>
+            <div class="col-md-4">
+                <input id="price" name="price" type="text" placeholder="price"
+                       class="form-control input-md" required="" disabled="disabled">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <button id="pricecalc" name="pricecalc" class="btn btn-primary">
+                    Calculate
+                </button>
+            </div>
+        </div>
+
         <!-- Button -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="singlebutton"></label>
@@ -119,4 +136,36 @@
 </div>
 
 </body>
+<script type="application/javascript">
+    $("#pricecalc").click(function (event) {
+        event.preventDefault();
+
+        var weight = $("#textinput").val();
+        var isUrgent = $("#checkboxes-1");
+        console.log(isUrgent);
+        var newVar = isUrgent.get(0).checked;
+
+
+        $.ajax({
+            url: "http://localhost:8080" + '/parcel/calc-price/'+weight+"/"+newVar,
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            },
+            contentType: "application/json; charset=utf-8",
+            type: 'get',
+            success: function (data) {
+                $("#price").val(data);
+                console.log(data);
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert("server error")
+            }
+        });
+
+
+    })
+    ;
+
+
+</script>
 </html>
