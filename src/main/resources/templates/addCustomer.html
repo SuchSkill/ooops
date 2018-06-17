@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Add Person</title>
+    <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+
+    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Create a Customer:</h1>
+<a href="/" role="button" class="btn btn-primary">Home</a>
+<!--
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+   -->
+
+<!--<form th:action="@{/addCustomer}"-->
+      <!--th:object="${customerForm}" method="POST">-->
+    <!--Address:-->
+    <!--<input type="text" th:field="*{address}" />-->
+    <!--<br/>-->
+    <!--Phone:-->
+    <!--<input type="text" th:field="*{phone}" />-->
+    <!--<br/>-->
+    <!--<input type="submit" value="Create" role="button" class="btn btn-primary" />-->
+<!--</form>-->
+<form class="form-horizontal" th:action="@{/addCustomer}"
+      th:object="${customerForm}" method="POST">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>Form Name</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Address">Address</label>
+            <div class="col-md-4">
+                <input id="Address" name="Address" type="text" placeholder="address" class="form-control input-md" th:field="*{address}">
+
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="phone">Phone</label>
+            <div class="col-md-4">
+                <input id="phone" name="phone" type="text" placeholder="123456789" class="form-control input-md" th:field="*{phone}" >
+
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="submitbtn">Create Customer</label>
+            <div class="col-md-4">
+                <button id="submitbtn" name="submitbtn" class="btn btn-primary" type="submit" value="Create">Submit</button>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+
+
+<br/>
+
+<!-- Check if errorMessage is not null and not empty -->
+
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+</div>
+
+</body>
+</html>

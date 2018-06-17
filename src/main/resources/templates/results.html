@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+</head>
+
+<body>
+<div th:fragment="resultsList" th:unless="${#lists.isEmpty(parcels)}" id="results-block">
+    <table >
+        <thead>
+        <tr>
+            <th >Id</th>
+            <th >Address</th>
+            <th >Weight</th>
+            <th >Urgent</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="parcel : ${parcels}" class="col-md-4">
+            <td th:text="${parcel.id}" class="col-md-auto">id</td>
+            <td th:text="${parcel.deliveryAddress}" class="col-md-auto">surname</td>
+            <td th:text="${parcel.weight}" class="col-md-auto">name</td>
+            <td th:text="${parcel.urgent}" class="col-md-auto">country</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

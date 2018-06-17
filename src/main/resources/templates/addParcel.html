@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Person</title>
+    <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+
+    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Create Parcel:</h1>
+<a href="/" role="button" class="btn btn-primary">Home</a>
+<br/>
+<!--
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+   -->
+
+<!--<form >-->
+<!--Address:-->
+<!--<input type="text" th:field="*{address}" />-->
+<!--<br/>-->
+<!--Phone:-->
+<!--<input type="text" th:field="*{phone}" />-->
+<!--<br/>-->
+<!--<input type="submit" value="Create" />-->
+<!--</form>-->
+
+<form class="form-horizontal"
+      th:action="@{/addParcel}"
+      th:object="${parcelForm}" method="POST">
+    <fieldset>
+
+        <!-- Form Name -->
+        <legend>New parcel</legend>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Delivery address">Delivery address</label>
+            <div class="col-md-4">
+                <input id="Delivery address" name="Delivery address" type="text" placeholder="address"
+                       class="form-control input-md" required="" th:field="*{deliveryAddress}">
+
+            </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="selectbasic">Select individual</label>
+            <div class="col-md-4">
+                <select id="selectbasic" name="selectbasic" class="form-control" th:field="*{individualId}">
+                    <option th:each="individual : ${individuals}"
+                            th:value="${individual.id}"
+                            th:text="${individual.address} + ' '  + ${individual.phones}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="createCustomer"></label>
+            <div class="col-md-4">
+                <a id="createCustomer" name="createCustomer" class="btn btn-primary" href="addCustomer" role="button">New individual</a>
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="textinput">Weight</label>
+            <div class="col-md-4">
+                <input id="textinput" name="textinput" type="text" placeholder="1000" class="form-control input-md"
+                       required="" th:field="*{weight}">
+            </div>
+        </div>
+
+        <!-- Multiple Checkboxes -->
+        <div class=" form-group">
+            <label class="col-md-4 control-label" for="checkboxes">Extras</label>
+            <div class="col-md-4">
+                <div class="checkbox">
+                    <label for="checkboxes-0">
+                        <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1" th:checked="${parcelForm.wrapping}">
+                        Wrapping
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label for="checkboxes-1">
+                        <input type="checkbox" name="checkboxes" id="checkboxes-1" value="2" th:checked="${parcelForm.urgent}">
+                        Urgent
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+            <div class="col-md-4">
+                <button id="singlebutton" name="singlebutton" class="btn btn-primary" type="submit" value="Create">
+                    Submit
+                </button>
+            </div>
+        </div>
+
+    </fieldset>
+</form>
+
+
+<br/>
+
+<!-- Check if errorMessage is not null and not empty -->
+
+<div th:if="${errorMessage}" th:utext="${errorMessage}"
+     style="color:red;font-style:italic;">
+</div>
+
+</body>
+</html>

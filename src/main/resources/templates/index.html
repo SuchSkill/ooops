@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Welcome</title>
+    <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+
+    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Welcome</h1>
+<h2 th:utext="${message}"></h2>
+
+<!--
+
+   In Thymeleaf the equivalent of
+   JSP's ${pageContext.request.contextPath}/edit.html
+   would be @{/edit.html}
+
+   -->
+
+<a th:href="@{/customerList}" role="button" class="btn btn-primary">Customer List</a>
+<a th:href="@{/addParcel}" role="button" class="btn btn-primary">Add parcel</a>
+
+</body>
+
+</html>

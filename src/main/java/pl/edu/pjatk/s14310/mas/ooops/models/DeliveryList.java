@@ -1,7 +1,6 @@
 package pl.edu.pjatk.s14310.mas.ooops.models;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -9,8 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
 public class DeliveryList {
     @Id

@@ -49,12 +49,12 @@ public class OoopsApplicationTests {
 //
 //    @Test(expected = IllegalArgumentException.class)
 //    public void setTwiceHoursToUrgentShouldThrowError() {
-//        Parcel.setHoursToUrgent(Parcel.getHoursToUrgent() * 2);
+//        Parcel.setBasicHoursToUrgent(Parcel.getHoursToUrgent() * 2);
 //    }
 //
 //    @Test(expected = IllegalArgumentException.class)
 //    public void setHalfHoursToUrgentShouldThrowError() {
-//        Parcel.setHoursToUrgent(Parcel.getHoursToUrgent() / 2);
+//        Parcel.setBasicHoursToUrgent(Parcel.getHoursToUrgent() / 2);
 //    }
 //
 //    @Test

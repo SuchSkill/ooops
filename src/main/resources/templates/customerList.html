@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Person List</title>
+    <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+
+    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link href="webjars/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+
+</head>
+<body>
+<h1>Customer List</h1>
+<a href="/" role="button" class="btn btn-primary">Home</a>
+<br/>
+<a href="addCustomer" role="button" class="btn btn-primary">Add Customer</a>
+
+<br/><br/>
+
+<div class="form-group">
+    <label class="col-md-4 control-label" for="selectbasic">Select individual</label>
+    <div class="col-md-4">
+        <select id="selectbasic" name="selectbasic" class="form-control">
+            <option th:each="individual : ${individuals}"
+                    th:value="${individual.id}"
+                    th:text="${individual.address} + ' '  + ${individual.phones}">
+            </option>
+        </select>
+    </div>
+</div>
+<!--<div class="form-group">-->
+    <!--<label class="col-md-4 control-label" for="getParcelsForCustomer"></label>-->
+    <!--<div class="col-md-4">-->
+        <!--<button id="getParcelsForCustomer" name="getParcelsForCustomer" class="btn btn-primary" href="addCustomer">Get-->
+            <!--Parcels-->
+        <!--</button>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div id="resultsBlock">
+
+</div>
+
+</body>
+</html>
+<script type="application/javascript">
+    $(document).ready(function() {
+        $("#selectbasic").val("1").trigger("change");
+        console.log(1)
+    });
+    $("#selectbasic").change(function (event) {
+        event.preventDefault();
+
+        var customerId = $("#selectbasic").val();
+        $("#resultsBlock").load("http://localhost:8080" + '/parcel/'+customerId);
+
+        // $.ajax({
+        //     url: "http://localhost:8080" + '/parcel/'+customerId,
+        //     headers: {
+        //         'Access-Control-Allow-Origin': '*',
+        //     },
+        //     contentType: "application/json; charset=utf-8",
+        //     type: 'get',
+        //     success: function (data) {
+        //         console.log(data);
+        //     },
+        //     error: function (xhr, ajaxOptions, thrownError) {
+        //         alert("server error")
+        //     }
+        // });
+
+        // fire_ajax_submit();
+
+    })
+    ;
+
+
+</script>

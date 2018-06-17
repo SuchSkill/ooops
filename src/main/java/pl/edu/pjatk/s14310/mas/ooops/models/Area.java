@@ -3,15 +3,14 @@ package pl.edu.pjatk.s14310.mas.ooops.models;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
 
+@Entity
 @NoArgsConstructor
 public class Area {
     @Id
@@ -23,14 +22,18 @@ public class Area {
     @Setter
     @Getter
     private String name;
+    @OneToMany(targetEntity=Courier.class, fetch=FetchType.EAGER)
     private List<Courier> couriers;
+    @OneToMany(targetEntity=Region.class)
     private List<Region> regions;
     @Setter
     @Getter
-
+    @OneToMany(targetEntity=Office.class, fetch=FetchType.EAGER)
+    @OrderBy("address")
     private SortedSet<Office> offices;
     @Setter
     @Getter
+    @OneToOne
     private Office headquarter;
 
     private int limit = 4;
@@ -69,11 +72,23 @@ public class Area {
         return new ArrayList<>(regions);
     }
 
-    @Data
+    @Entity
+    @Getter
+    @Setter
     @AllArgsConstructor
-    private class Region{
+    @NoArgsConstructor
+    private class Region {
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        private int id;
         private String name;
         private String description;
+
+        public Region(String name, String description) {
+            this.name = name;
+            this.description = description;
+        }
+
     }
 
 }

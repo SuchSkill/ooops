@@ -1,22 +1,22 @@
 package pl.edu.pjatk.s14310.mas.ooops.models;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.validator.constraints.UniqueElements;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @Entity
-@NoArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Parcel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,13 +32,12 @@ public class Parcel {
     @ManyToOne
     @NotNull
     private Individual givenBy;
-    private static int hoursToUrgent = 24;
-    @OneToMany(targetEntity=DeliveryList.class, fetch=FetchType.EAGER)
+    private static int basicHoursToUrgent = 24;
+    @OneToMany(targetEntity = DeliveryList.class)
     private List<DeliveryList> deliveryLists;
     private State state;
     private String signature;
     private int wrappingPrice;
-
 
 
     @NotNull
@@ -55,33 +54,54 @@ public class Parcel {
     }
 
 
-    public void addDeliveryList(DeliveryList dl){
+    public void addDeliveryList(DeliveryList dl) {
         deliveryLists.add(dl);
     }
-    public int getPrice(){
+
+    public int getPrice() {
         int deliveryPrice = isUrgent() ? weight * 2 : weight;
-        return deliveryPrice+wrappingPrice;
+        return deliveryPrice + wrappingPrice;
     }
-    public static int getPrice(int weightEstimation, boolean isUrgent){
-        return isUrgent? weightEstimation*2:weightEstimation;
+
+    public static int getPrice(int weightEstimation, boolean isUrgent) {
+        return isUrgent ? weightEstimation * 2 : weightEstimation;
     }
-    public static int getPrice(int weightEstimation){
+
+    public static int getPrice(int weightEstimation) {
         return weightEstimation;
     }
 
-    public static void setHoursToUrgent(int newOurs){
-        double constrain = hoursToUrgent * 0.20;
-        if (Math.abs(newOurs - hoursToUrgent) > constrain){
-            throw new IllegalArgumentException("new hours cant differ more then 20% from current " + hoursToUrgent);
+    public static void setBasicHoursToUrgent(int newOurs) {
+        double constrain = basicHoursToUrgent * 0.20;
+        if (Math.abs(newOurs - basicHoursToUrgent) > constrain) {
+            throw new IllegalArgumentException("new hours cant differ more then 20% from current " + basicHoursToUrgent);
         }
-        hoursToUrgent = newOurs;
+        basicHoursToUrgent = newOurs;
     }
 
-    public static int getHoursToUrgent(){
-        return hoursToUrgent;
+    public static int getBasicHoursToUrgent() {
+        return basicHoursToUrgent;
 
     }
-    public boolean isUrgent(){
-        return createdUrgent || LocalDateTime.now().plusHours(hoursToUrgent).isAfter(ChronoLocalDateTime.from(estimatedDeliveryDate.atStartOfDay()));
+
+    public boolean isUrgent() {
+        return createdUrgent || LocalDateTime.now().plusHours(basicHoursToUrgent).isAfter(ChronoLocalDateTime.from(estimatedDeliveryDate.atStartOfDay()));
     }
+
+    public long getHoursToUrgent() {
+        if(!createdUrgent || LocalDateTime.now().plusHours(basicHoursToUrgent).isBefore(ChronoLocalDateTime.from(estimatedDeliveryDate.atStartOfDay()))){
+            Duration between = Duration.between(LocalDateTime.now(), estimatedDeliveryDate.atStartOfDay());
+            return between.toHours();
+        }
+        else{
+            return 0;
+        }
+
+    }
+
+    public List<Parcel> getOverdueParcels(){
+        return new ArrayList<>();
+    }
+
 }
+
