@@ -77,11 +77,12 @@ public class ParcelController {
         return "results :: resultsList";
     }
 
-    @GetMapping("/parcel/calc-price/{weight}/{isUrgent}")
+    @GetMapping("/parcel/calc-price/{weight}/{isUrgent}/{isWrap}")
     @ResponseBody
     public String calcParcelsPrice(@PathVariable("weight") int weight,
-                                   @PathVariable("isUrgent") boolean isUrgent) {
+                                   @PathVariable("isUrgent") boolean isUrgent,
+                                   @PathVariable("isWrap") boolean isWrap) {
 //        boolean b = isUrgent == 2;
-        return Parcel.getPrice(weight, isUrgent)+"";
+        return Parcel.getPrice(weight, isUrgent, isWrap)+"";
     }
 }

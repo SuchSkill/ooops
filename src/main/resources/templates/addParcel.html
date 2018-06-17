@@ -141,13 +141,12 @@
         event.preventDefault();
 
         var weight = $("#textinput").val();
-        var isUrgent = $("#checkboxes-1");
-        console.log(isUrgent);
-        var newVar = isUrgent.get(0).checked;
+        var isUrgent = $("#checkboxes-1").get(0).checked;
+        var isWrap = $("#checkboxes-0").get(0).checked;
 
 
         $.ajax({
-            url: "http://localhost:8080" + '/parcel/calc-price/'+weight+"/"+newVar,
+            url: "http://localhost:8080" + '/parcel/calc-price/'+weight+"/"+isUrgent+"/"+isWrap,
             headers: {
                 'Access-Control-Allow-Origin': '*',
             },
@@ -155,7 +154,6 @@
             type: 'get',
             success: function (data) {
                 $("#price").val(data);
-                console.log(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert("server error")

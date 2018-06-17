@@ -29,8 +29,8 @@ public class Parcel {
     private LocalDate estimatedDeliveryDate;
     private LocalDate deliveredDate;
     private boolean createdUrgent;
-    @ManyToOne
     @NotNull
+    @ManyToOne
     private Individual givenBy;
     private static int basicHoursToUrgent = 24;
     @OneToMany(targetEntity = DeliveryList.class)
@@ -48,6 +48,7 @@ public class Parcel {
         this.estimatedDeliveryDate = creationDate.plusDays(3);
         this.createdUrgent = isUrgent;
         this.givenBy = givenBy;
+        givenBy.addParcel(this);
         this.deliveryLists = new ArrayList<>();
         this.signature = signature;
         wrappingPrice = signature == null ? weight : 0;
@@ -63,8 +64,11 @@ public class Parcel {
         return deliveryPrice + wrappingPrice;
     }
 
-    public static int getPrice(int weightEstimation, boolean isUrgent) {
-        return isUrgent ? weightEstimation * 2 : weightEstimation;
+    public static int getPrice(int weightEstimation, boolean isUrgent, boolean isWrap) {
+        int price = weightEstimation;
+        if (isUrgent) price *= 2;
+        if (isWrap) price *= 2;
+        return price;
     }
 
     public static int getPrice(int weightEstimation) {
